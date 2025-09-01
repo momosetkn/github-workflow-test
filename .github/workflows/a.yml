@@ -43,6 +43,15 @@ jobs:
           if [ -z "$prompt" ]; then
             prompt="このプルリクエストをレビューしてください"
           fi
+          if echo "$body" | grep -q "notion"; then
+            urls=$(echo "$body" | grep -o 'https://www.notion.so[^ )]*' | tr '\n' ' ')
+            notion_context=""
+            for url in $urls; do
+              info=$(curl -s "http://notion-mcp/api/fetch?url=$url")
+              notion_context="$notion_context\nFrom $url:\n$info"
+            done
+            prompt="[Use NotionMcp]\n$notion_context\n\n$prompt"
+          fi
           # 改行を変換
           {
             echo 'prompt<<EOF'
