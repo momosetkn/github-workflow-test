@@ -49,6 +49,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "${{ github.event.issue.comments_url }}")
  
+          echo "$comments"
           all_bodies=$(echo "$comments" | jq -r '.[]?.body? // empty')
           notion_urls=$(echo "$all_bodies" | grep -o 'https://www.notion.so[^ )]*' | sort -u)
           if [ -n "$notion_urls" ]; then
