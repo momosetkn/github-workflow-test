@@ -43,20 +43,12 @@ jobs:
         run: |
           ./.github/scripts/create_mcp_config.sh "${{ secrets.NOTION_KEY }}"
 
-#      - name: Run Claude Code
-#        uses: anthropics/claude-code-action@v1
-#        with:
-#          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-#          claude_args: |
-#            --mcp-config /tmp/mcp-config.json
-#          prompt: ${{ steps.detect.outputs.prompt }}
-#          additional_permissions: |
-#            actions: read
-
-      - name: Debug Output (instead of running Claude)
-        run: |
-          COMMAND="${{ steps.detect.outputs.command }}"
-          PROMPT="${{ steps.detect.outputs.prompt }}"
-          
-          echo "Command: $COMMAND"
-          echo "Prompt: $PROMPT"
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: |
+            --mcp-config /tmp/mcp-config.json
+          prompt: ${{ steps.detect.outputs.prompt }}
+          additional_permissions: |
+            actions: read
