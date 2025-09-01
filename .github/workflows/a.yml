@@ -56,6 +56,7 @@ jobs:
             notion_context="Related Notion pages:\n$notion_urls"
             prompt="[Use NotionMcp]\n$notion_context\n\n$prompt"
           fi
+          echo '$prompt'
           # 改行を変換
           {
             echo 'prompt<<EOF'
