@@ -35,22 +35,24 @@ jobs:
         run: |
           body="${{ github.event.comment.body || github.event.review.body }}"
           echo "Comment body: $body"
+          command="review"
+          prompt=""
+  
           if [[ "$body" == *"@claude review"* ]]; then
-            echo "command=review" >> $GITHUB_OUTPUT
+          command="review"
+          prompt="${body#*@claude review}"
           elif [[ "$body" == *"@claude suggest"* ]]; then
-            echo "command=suggest" >> $GITHUB_OUTPUT
+          command="suggest"
+          prompt="${body#*@claude suggest}"
           elif [[ "$body" == *"@claude implement"* ]]; then
-            echo "command=implement" >> $GITHUB_OUTPUT
+          command="implement"
+          prompt="${body#*@claude implement}"
           elif [[ "$body" == *"@claude security-review"* ]]; then
-            echo "command=security-review" >> $GITHUB_OUTPUT
-          else
-            echo "command=review" >> $GITHUB_OUTPUT # fallback
+          command="security-review"
+          prompt="${body#*@claude security-review}"
           fi
 
-      - name: Run Claude Code
-        uses: anthropics/claude-code-action@v1
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          command: ${{ steps.detect.outputs.command }}
-          additional_permissions: |
-            actions: read
+      - name: Debug Output (instead of running Claude)
+        run: |
+          echo "Command: ${{ steps.detect.outputs.command }}"
+          echo "Prompt: ${{ steps.detect.outputs.prompt }}"
