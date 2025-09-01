@@ -43,10 +43,12 @@ jobs:
           if [ -z "$prompt" ]; then
             prompt="このプルリクエストをレビューしてください"
           fi
-          if echo "$body" | grep -q "notion"; then
-            urls=$(echo "$body" | grep -o 'https://www.notion.so[^ )]*' | tr '\n' ' ')
+          # すべての過去コメントから Notion URL を抽出
+          all_bodies="$(echo '${{ toJson(github.event) }}' | jq -r '..|.body? // empty')"
+          notion_urls=$(echo "$all_bodies" | grep -o 'https://www.notion.so[^ )]*' | sort -u)
+          if [ -n "$notion_urls" ]; then
             notion_context=""
-            for url in $urls; do
+            for url in $notion_urls; do
               info=$(curl -s "http://notion-mcp/api/fetch?url=$url")
               notion_context="$notion_context\nFrom $url:\n$info"
             done
