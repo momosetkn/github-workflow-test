@@ -39,21 +39,21 @@ jobs:
           prompt=""
   
           if [[ "$body" == *"@claude review"* ]]; then
-            printf "command=review" >> $GITHUB_OUTPUT
+            echo "command=review" >> $GITHUB_OUTPUT
             prompt="${body#*@claude review}"
           elif [[ "$body" == *"@claude suggest"* ]]; then
-            printf "command=suggest" >> $GITHUB_OUTPUT
+            echo "command=suggest" >> $GITHUB_OUTPUT
             prompt="${body#*@claude suggest}"
           elif [[ "$body" == *"@claude implement"* ]]; then
-            printf "command=implement" >> $GITHUB_OUTPUT
+            echo "command=implement" >> $GITHUB_OUTPUT
             prompt="${body#*@claude implement}"
           elif [[ "$body" == *"@claude security-review"* ]]; then
-            printf "command=security-review" >> $GITHUB_OUTPUT
+            echo "command=security-review" >> $GITHUB_OUTPUT
             prompt="${body#*@claude security-review}"
           fi
           {
             echo 'prompt<<EOF'
-            echo "$prompt"
+            printf '%s\n' "$prompt" | tr -d '\r'
             echo 'EOF'
           } >> $GITHUB_OUTPUT
 
