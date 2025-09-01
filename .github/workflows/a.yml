@@ -51,6 +51,9 @@ jobs:
             echo "command=security-review" >> $GITHUB_OUTPUT
             prompt="${body#*@claude security-review}"
           fi
+          # 前後の空白・改行を削除
+          prompt="$(echo "$prompt" | xargs)"
+          # 改行を変換
           {
             echo 'prompt<<EOF'
             printf '%s\n' "$prompt" | tr -d '\r'
