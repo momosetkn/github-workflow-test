@@ -37,8 +37,6 @@ jobs:
           echo "Comment body: $body"
           prompt="${body#*@claude}"
   
-          # 前後の空白・改行を削除
-          prompt="$(echo "$prompt" | xargs)"
           # 空文字ならデフォルト値を設定
           if [ -z "$prompt" ]; then
             prompt="このプルリクエストをレビューしてください"
@@ -57,6 +55,8 @@ jobs:
             prompt="[Use NotionMcp]\n$notion_context\n\n$prompt"
           fi
           echo '$prompt'
+          # 前後の空白・改行を削除
+          prompt="$(echo "$prompt" | xargs)"
           # 改行を変換
           {
             echo 'prompt<<EOF'
