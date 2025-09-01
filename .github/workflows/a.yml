@@ -35,21 +35,21 @@ jobs:
         run: |
           body="${{ github.event.comment.body || github.event.review.body }}"
           echo "Comment body: $body"
-          command="review"
+          command=""
           prompt=""
   
           if [[ "$body" == *"@claude review"* ]]; then
-            echo "command=review" >> $GITHUB_OUTPUT
-            echo "prompt=${body#*@claude review}" >> $GITHUB_OUTPUT
+            printf "command=review" >> $GITHUB_OUTPUT
+            printf "prompt=${body#*@claude review}" >> $GITHUB_OUTPUT
           elif [[ "$body" == *"@claude suggest"* ]]; then
-            echo "command=suggest" >> $GITHUB_OUTPUT
-            echo "prompt=${body#*@claude suggest}" >> $GITHUB_OUTPUT
+            printf "command=suggest" >> $GITHUB_OUTPUT
+            printf "prompt=${body#*@claude suggest}" >> $GITHUB_OUTPUT
           elif [[ "$body" == *"@claude implement"* ]]; then
-            echo "command=implement" >> $GITHUB_OUTPUT
-            echo "prompt=${body#*@claude implement}" >> $GITHUB_OUTPUT
+            printf "command=implement" >> $GITHUB_OUTPUT
+            printf "prompt=${body#*@claude implement}" >> $GITHUB_OUTPUT
           elif [[ "$body" == *"@claude security-review"* ]]; then
-            echo "command=security-review" >> $GITHUB_OUTPUT
-            echo "prompt=${body#*@claude security-review}" >> $GITHUB_OUTPUT
+            printf "command=security-review" >> $GITHUB_OUTPUT
+            printf "prompt=${body#*@claude security-review}" >> $GITHUB_OUTPUT
           fi
 
       - name: Debug Output (instead of running Claude)
