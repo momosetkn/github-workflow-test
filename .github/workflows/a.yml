@@ -39,6 +39,10 @@ jobs:
   
           # 前後の空白・改行を削除
           prompt="$(echo "$prompt" | xargs)"
+          # 空文字ならデフォルト値を設定
+          if [ -z "$prompt" ]; then
+            prompt="このプルリクエストをレビューしてください"
+          fi
           # 改行を変換
           {
             echo 'prompt<<EOF'
