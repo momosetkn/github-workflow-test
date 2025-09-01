@@ -26,10 +26,10 @@ if [ -n "$notion_urls" ]; then
     $url"
   done <<< "$notion_urls"
   
-  prompt="[Use NotionMcp]
-  $notion_context
-  
-  $prompt"
+prompt="[Use NotionMcp]
+$notion_context
+
+$prompt"
 fi
 
 echo "$prompt"
