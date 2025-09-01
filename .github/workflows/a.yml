@@ -44,7 +44,12 @@ jobs:
             prompt="このプルリクエストをレビューしてください"
           fi
           # すべての過去コメントから Notion URL を抽出
-          all_bodies="$(echo '${{ toJson(github.event) }}' | jq -r '..|.body? // empty')"
+          # すべての過去コメントを取得
+          comments=$(curl -sSL -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "${{ github.event.issue.comments_url }}")
+ 
+          all_bodies=$(echo "$comments" | jq -r '.[].body // empty')
           notion_urls=$(echo "$all_bodies" | grep -o 'https://www.notion.so[^ )]*' | sort -u)
           if [ -n "$notion_urls" ]; then
             notion_context=""
