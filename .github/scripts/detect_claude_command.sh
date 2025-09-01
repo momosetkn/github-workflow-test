@@ -22,8 +22,8 @@ notion_urls=$(echo "$all_bodies" | grep -o 'https://www.notion.so[^ )]*' | sort 
 if [ -n "$notion_urls" ]; then
   notion_context="Related Notion pages:"
   while IFS= read -r url; do
-    notion_context="$notion_context
-    $url"
+notion_context="$notion_context
+- $url"
   done <<< "$notion_urls"
   
 prompt="[Use NotionMcp]
