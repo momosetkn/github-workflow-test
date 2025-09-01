@@ -45,7 +45,7 @@ jobs:
           fi
           # すべての過去コメントから Notion URL を抽出
           # すべての過去コメントを取得
-          comments=$(curl -sSL -H "Authorization: Bearer $GITHUB_TOKEN" \
+          comments=$(curl -sSL -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             "${{ github.event.issue.comments_url }}")
  
