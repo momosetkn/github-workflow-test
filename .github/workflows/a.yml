@@ -40,17 +40,22 @@ jobs:
   
           if [[ "$body" == *"@claude review"* ]]; then
             printf "command=review" >> $GITHUB_OUTPUT
-            printf "prompt=${body#*@claude review}" >> $GITHUB_OUTPUT
+            prompt="${body#*@claude review}"
           elif [[ "$body" == *"@claude suggest"* ]]; then
             printf "command=suggest" >> $GITHUB_OUTPUT
-            printf "prompt=${body#*@claude suggest}" >> $GITHUB_OUTPUT
+            prompt="${body#*@claude suggest}"
           elif [[ "$body" == *"@claude implement"* ]]; then
             printf "command=implement" >> $GITHUB_OUTPUT
-            printf "prompt=${body#*@claude implement}" >> $GITHUB_OUTPUT
+            prompt="${body#*@claude implement}"
           elif [[ "$body" == *"@claude security-review"* ]]; then
             printf "command=security-review" >> $GITHUB_OUTPUT
-            printf "prompt=${body#*@claude security-review}" >> $GITHUB_OUTPUT
+            prompt="${body#*@claude security-review}"
           fi
+          {
+            echo 'prompt<<EOF'
+            echo "$prompt"
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
 
       - name: Debug Output (instead of running Claude)
         run: |
