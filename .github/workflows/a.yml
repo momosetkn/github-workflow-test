@@ -55,5 +55,8 @@ jobs:
 
       - name: Debug Output (instead of running Claude)
         run: |
-          echo "Command: ${{ steps.detect.outputs.command }}"
-          echo "Prompt: ${{ steps.detect.outputs.prompt }}"
+          COMMAND="${{ steps.detect.outputs.command }}"
+          PROMPT="${{ steps.detect.outputs.prompt }}"
+          
+          echo "Command: $COMMAND"
+          echo "Prompt: $PROMPT"
