@@ -53,7 +53,7 @@ jobs:
           all_bodies=$(echo "$comments" | jq -r '.[]?.body? // empty')
           notion_urls=$(echo "$all_bodies" | grep -o 'https://www.notion.so[^ )]*' | sort -u)
           if [ -n "$notion_urls" ]; then
-            notion_context="Notion URLs detected:\n$notion_urls"
+            notion_context="Related Notion pages:\n$notion_urls"
             prompt="[Use NotionMcp]\n$notion_context\n\n$prompt"
           fi
           # 改行を変換
