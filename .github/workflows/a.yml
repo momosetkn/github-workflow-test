@@ -55,8 +55,6 @@ jobs:
             prompt="[Use NotionMcp]\n$notion_context\n\n$prompt"
           fi
           echo '$prompt'
-          # 前後の空白・改行を削除
-          prompt="$(echo "$prompt" | xargs)"
           # 改行を変換
           {
             echo 'prompt<<EOF'
