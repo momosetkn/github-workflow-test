@@ -43,8 +43,8 @@ jobs:
           if [ -z "$prompt" ]; then
             prompt="このプルリクエストをレビューしてください"
           fi
-          # すべての過去コメントから Notion URL を集約
-          all_bodies="$(jq -r '..|.body? // empty' <<< "${{ toJson(github.event) }}")"
+          # すべての過去コメントから Notion URL を抽出
+          all_bodies="$(echo '${{ toJson(github.event) }}' | jq -r '..|.body? // empty')"
           notion_urls=$(echo "$all_bodies" | grep -o 'https://www.notion.so[^ )]*' | sort -u)
           if [ -n "$notion_urls" ]; then
             notion_context=""
