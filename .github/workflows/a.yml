@@ -50,10 +50,28 @@ jobs:
             echo 'EOF'
           } >> $GITHUB_OUTPUT
 
+      - name: Create MCP Config
+        run: |
+          cat > /tmp/mcp-config.json << 'EOF'
+          {
+            "mcpServers": {
+              "notionApi": {
+                "command": "npx",
+                "args": ["-y", "@notionhq/notion-mcp-server"],
+                "env": {
+                  "OPENAPI_MCP_HEADERS": "{\"Authorization\": \"Bearer ${{ secrets.NOTION_KEY }}\", \"Notion-Version\": \"2022-06-28\" }"
+                }
+              }
+            }
+          }
+          EOF
+
 #      - name: Run Claude Code
 #        uses: anthropics/claude-code-action@v1
 #        with:
 #          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+#          claude_args: |
+#            --mcp-config /tmp/mcp-config.json
 #          prompt: ${{ steps.detect.outputs.prompt }}
 #          additional_permissions: |
 #            actions: read
