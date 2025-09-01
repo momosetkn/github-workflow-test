@@ -39,17 +39,17 @@ jobs:
           prompt=""
   
           if [[ "$body" == *"@claude review"* ]]; then
-          command="review"
-          prompt="${body#*@claude review}"
+            echo "command=review" >> $GITHUB_OUTPUT
+            echo "prompt=${body#*@claude review}" >> $GITHUB_OUTPUT
           elif [[ "$body" == *"@claude suggest"* ]]; then
-          command="suggest"
-          prompt="${body#*@claude suggest}"
+            echo "command=suggest" >> $GITHUB_OUTPUT
+            echo "prompt=${body#*@claude suggest}" >> $GITHUB_OUTPUT
           elif [[ "$body" == *"@claude implement"* ]]; then
-          command="implement"
-          prompt="${body#*@claude implement}"
+            echo "command=implement" >> $GITHUB_OUTPUT
+            echo "prompt=${body#*@claude implement}" >> $GITHUB_OUTPUT
           elif [[ "$body" == *"@claude security-review"* ]]; then
-          command="security-review"
-          prompt="${body#*@claude security-review}"
+            echo "command=security-review" >> $GITHUB_OUTPUT
+            echo "prompt=${body#*@claude security-review}" >> $GITHUB_OUTPUT
           fi
 
       - name: Debug Output (instead of running Claude)
