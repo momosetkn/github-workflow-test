@@ -35,22 +35,8 @@ jobs:
         run: |
           body="${{ github.event.comment.body || github.event.review.body }}"
           echo "Comment body: $body"
-          command=""
-          prompt=""
+          prompt="${body#*@claude }"
   
-          if [[ "$body" == *"@claude review"* ]]; then
-            echo "command=review" >> $GITHUB_OUTPUT
-            prompt="${body#*@claude review}"
-          elif [[ "$body" == *"@claude suggest"* ]]; then
-            echo "command=suggest" >> $GITHUB_OUTPUT
-            prompt="${body#*@claude suggest}"
-          elif [[ "$body" == *"@claude implement"* ]]; then
-            echo "command=implement" >> $GITHUB_OUTPUT
-            prompt="${body#*@claude implement}"
-          elif [[ "$body" == *"@claude security-review"* ]]; then
-            echo "command=security-review" >> $GITHUB_OUTPUT
-            prompt="${body#*@claude security-review}"
-          fi
           # 前後の空白・改行を削除
           prompt="$(echo "$prompt" | xargs)"
           # 改行を変換
@@ -59,6 +45,14 @@ jobs:
             printf '%s\n' "$prompt" | tr -d '\r'
             echo 'EOF'
           } >> $GITHUB_OUTPUT
+
+#      - name: Run Claude Code
+#        uses: anthropics/claude-code-action@v1
+#        with:
+#          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+#          prompt: ${{ steps.detect.outputs.prompt }}
+#          additional_permissions: |
+#            actions: read
 
       - name: Debug Output (instead of running Claude)
         run: |
