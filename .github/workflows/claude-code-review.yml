@@ -40,7 +40,7 @@ jobs:
           # Safely handle the body text
           body="${{ github.event.comment.body || github.event.review.body || github.event.issue.body || '' }}"
           # Use a file to pass the content securely to avoid shell interpretation issues
-          echo "$body" > /tmp/claude_input.txt
+          printf '%s' "$body" > /tmp/claude_input.txt
           ./.github/scripts/detect_claude_command.sh "$(cat /tmp/claude_input.txt)"
 
       - name: Create MCP Config
