@@ -41,7 +41,7 @@ jobs:
           body="${{ github.event.comment.body || github.event.review.body || github.event.issue.body || '' }}"
           # Use a file to pass the content securely to avoid shell interpretation issues
           printf '%s' "$body" > /tmp/claude_input.txt
-          ./.github/scripts/detect_claude_command.sh "$(cat /tmp/claude_input.txt)"
+          ./.github/scripts/detect_claude_command.sh < /tmp/claude_input.txt
 
       - name: Create MCP Config
         run: |
