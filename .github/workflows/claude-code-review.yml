@@ -35,9 +35,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_COMMENTS_URL: ${{ github.event.issue.comments_url }}
+        shell: /usr/bin/bash -e {0}
         run: |
-          body="${{ github.event.comment.body || github.event.review.body }}"
-          ./.github/scripts/detect_claude_command.sh "$body"
+          # Safely handle the body text
+          body="${{ github.event.comment.body || github.event.review.body || github.event.issue.body || '' }}"
+          # Use a file to pass the content securely to avoid shell interpretation issues
+          echo "$body" > /tmp/claude_input.txt
+          ./.github/scripts/detect_claude_command.sh "$(cat /tmp/claude_input.txt)"
 
       - name: Create MCP Config
         run: |
