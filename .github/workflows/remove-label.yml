@@ -8,6 +8,11 @@ jobs:
   claude:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
       - name: Setup GitHub CLI
         run: |
           echo "${{ github.token }}" | gh auth login --with-token
