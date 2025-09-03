@@ -17,9 +17,9 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup GitHub CLI
-        run: |
-          echo "${{ github.token }}" | gh auth login --with-token
+#      - name: Setup GitHub CLI
+#        run: |
+#          echo "${{ github.token }}" | gh auth login --with-token
 
       - name: Remove label
         run: |
