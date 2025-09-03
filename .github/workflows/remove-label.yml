@@ -8,6 +8,10 @@ jobs:
   claude:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup GitHub CLI
+        run: |
+          echo "${{ github.token }}" | gh auth login --with-token
+
       - name: Remove label
         run: |
           gh issue edit ${{ github.event.number }} --remove-label "bug"
