@@ -24,5 +24,5 @@ jobs:
       - name: Remove label
         run: |
           gh issue edit ${{ github.event.number }} --remove-label "bug"
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
