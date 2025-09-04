@@ -6,6 +6,7 @@ This file is used to test the paths-filter workflow
 
 def main():
     print("Hello from backend!")
+    print("Hello from backend!")
     return "Backend service is running"
 
 if __name__ == "__main__":
